@@ -1,0 +1,32 @@
+name: Building and testing
+
+on:
+  push:
+    branches:
+    tags:
+  pull_request:
+
+env:
+  CGO_ENABLED: '0'
+  GO111MODULE: 'on'
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }} for golang ${{ matrix.go }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: ['1.8.x', '1.9.x', '1.10.x', '1.11.x', '1.12.x', '1.13.x', '1.14.x', '1.15.x']
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go }}
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: go test -v ./...
