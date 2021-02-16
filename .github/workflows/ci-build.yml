@@ -15,7 +15,7 @@ jobs:
     name: Build on ${{ matrix.os }} for golang ${{ matrix.go }}
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         go: ['1.8.x', '1.15.x']
     steps:
